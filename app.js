@@ -5,7 +5,7 @@ const rateLimit = require('express-rate-limit');
 const cookieParser = require('cookie-parser');
 const { errors } = require('celebrate');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
-const auth = require('./middlewares/auth');
+// const auth = require('./middlewares/auth');
 const router = require('./routes/index');
 
 require('dotenv').config();
@@ -43,8 +43,8 @@ app.get('/crash-test', () => {
   }, 0);
 });
 
-// Подключаем рауты приложения с авторизацией
-app.use('*', auth, router);
+// Подключаем рауты приложения
+app.use('/', router);
 
 // Подключаем логгер ошибок
 app.use(errorLogger);
@@ -57,7 +57,7 @@ app.use((err, req, res, next) => {
   const statusCode = err.statusCode || 500;
 
   res.status(statusCode).send({
-    message: statusCode === 500 ? 'Произошла ошибка' : err.message,
+    message: statusCode === 500 ? 'Error' : err.message,
   });
   next();
 });
