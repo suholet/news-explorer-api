@@ -5,7 +5,6 @@ const rateLimit = require('express-rate-limit');
 const cookieParser = require('cookie-parser');
 const { errors } = require('celebrate');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
-// const auth = require('./middlewares/auth');
 const router = require('./routes/index');
 
 require('dotenv').config();
