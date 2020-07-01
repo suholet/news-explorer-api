@@ -5,6 +5,7 @@ const rateLimit = require('express-rate-limit');
 const cookieParser = require('cookie-parser');
 const { errors } = require('celebrate');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
+const errorHandler = require('./middlewares/errorHandler');
 const router = require('./routes/index');
 
 require('dotenv').config();
@@ -45,13 +46,6 @@ app.use(errorLogger);
 app.use(errors());
 
 // Централизованный обработчик ошибок
-app.use((err, req, res, next) => {
-  const statusCode = err.statusCode || 500;
-
-  res.status(statusCode).send({
-    message: statusCode === 500 ? 'Error' : err.message,
-  });
-  next();
-});
+app.use(errorHandler);
 
 app.listen(PORT);
