@@ -2,6 +2,7 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const User = require('../models/user');
 const AlreadyExistError = require('../errors/alreadyExistError');
+const { httpCode } = require('../errors/errHelper');
 
 const { NODE_ENV, JWT_SECRET } = process.env;
 
@@ -39,7 +40,7 @@ module.exports.createUser = (req, res, next) => {
       password: hash,
       name,
     }))
-    .then((user) => res.send(
+    .then((user) => res.status(httpCode.CREATED).send(
       {
         data: {
           email: user.email,

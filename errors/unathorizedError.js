@@ -1,7 +1,9 @@
+const { httpCode } = require('./errHelper');
+
 class UnathorizedError extends Error {
   constructor(message) {
     super(message);
-    this.statusCode = 401;
+    this.statusCode = httpCode.UNATHORIZED;
   }
 }
 

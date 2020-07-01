@@ -1,7 +1,9 @@
+const { httpCode } = require('./errHelper');
+
 class AlreadyExistError extends Error {
   constructor(message) {
     super(message);
-    this.statusCode = 409;
+    this.statusCode = httpCode.CONFLICT;
   }
 }
 

@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const { isURL } = require('validator');
+const { errMsg } = require('../errors/errHelper');
 
 const articleSchema = new mongoose.Schema({
   keyword: {
@@ -29,7 +30,7 @@ const articleSchema = new mongoose.Schema({
       validator(v) {
         return isURL(v);
       },
-      message: (props) => `${props.value} is not a valid link!`,
+      message: (props) => `${props.value} ${errMsg.INVALID_LINK}`,
     },
   },
   image: {
@@ -39,7 +40,7 @@ const articleSchema = new mongoose.Schema({
       validator(v) {
         return isURL(v);
       },
-      message: (props) => `${props.value} is not a valid link!`,
+      message: (props) => `${props.value} ${errMsg.INVALID_LINK}`,
     },
   },
   owner: {

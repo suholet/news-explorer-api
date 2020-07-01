@@ -1,11 +1,12 @@
 const Article = require('../models/article');
 const NotFoundError = require('../errors/notFoundError');
 const AccessDeniedError = require('../errors/accessDeniedError');
+const { httpCode, errMsg } = require('../errors/errHelper');
 
 module.exports.getArticles = (req, res, next) => {
   Article.find({})
     .populate('owner')
-    .then((articles) => res.send(articles))
+    .then((articles) => res.status(httpCode.OK).send(articles))
     .catch(next);
 };
 
@@ -31,7 +32,7 @@ module.exports.saveArticle = (req, res, next) => {
     image,
     owner,
   })
-    .then((article) => res.send(
+    .then((article) => res.status(httpCode.CREATED).send(
       {
         data: {
           keyword: article.keyword,
@@ -50,12 +51,13 @@ module.exports.saveArticle = (req, res, next) => {
 module.exports.deleteArticle = (req, res, next) => {
   Article.findById(req.params.articleId).select('+owner')
     .orFail(() => {
-      throw new NotFoundError(`Can't find article with id:${req.params.articleId}!`);
+      // throw new NotFoundError(`Can't find article with id:${req.params.articleId}!`);
+      throw new NotFoundError(`${errMsg.NO_ARTICLE} ${req.params.articleId}`);
     })
     .then((article) => {
       if (article.owner.equals(req.user._id)) {
         article.remove();
-        res.send(
+        res.status(httpCode.ACCEPTED).send(
           {
             data: {
               keyword: article.keyword,
@@ -69,7 +71,8 @@ module.exports.deleteArticle = (req, res, next) => {
           },
         );
       } else {
-        throw new AccessDeniedError('Only owner can delete article!');
+        // throw new AccessDeniedError('Only owner can delete article!');
+        throw new AccessDeniedError(`${errMsg.ACCESS_DENIED}`);
       }
     })
     .catch(next);

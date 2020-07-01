@@ -1,7 +1,9 @@
+const { httpCode } = require('./errHelper');
+
 class AccessDeniedError extends Error {
   constructor(message) {
     super(message);
-    this.statusCode = 403;
+    this.statusCode = httpCode.FORBIDEN;
   }
 }
 
