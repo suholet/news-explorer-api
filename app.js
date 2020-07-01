@@ -35,13 +35,6 @@ app.use(express.urlencoded({ extended: true }));
 // Подключаем логгер запросов
 app.use(requestLogger);
 
-// Временный тест для проверки сервера на запуск после падения
-app.get('/crash-test', () => {
-  setTimeout(() => {
-    throw new Error('Сервер сейчас упадёт');
-  }, 0);
-});
-
 // Подключаем рауты приложения
 app.use('/', router);
 
