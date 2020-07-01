@@ -69,7 +69,7 @@ module.exports.deleteArticle = (req, res, next) => {
           },
         );
       } else {
-        throw new AccessDeniedError(`Only owner can delete article with id:${req.params.cardId}!`);
+        throw new AccessDeniedError('Only owner can delete article!');
       }
     })
     .catch(next);
