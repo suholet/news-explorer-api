@@ -35,6 +35,7 @@ module.exports.saveArticle = (req, res, next) => {
     .then((article) => res.status(httpCode.CREATED).send(
       {
         data: {
+          _id: article._id,
           keyword: article.keyword,
           title: article.title,
           text: article.text,
@@ -60,6 +61,7 @@ module.exports.deleteArticle = (req, res, next) => {
         res.status(httpCode.ACCEPTED).send(
           {
             data: {
+              _id: article._id,
               keyword: article.keyword,
               title: article.title,
               text: article.text,
