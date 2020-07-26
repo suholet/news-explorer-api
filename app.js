@@ -16,7 +16,7 @@ const DATABASE_URL = process.env.DATABASE_URL || 'mongodb://localhost:27017/news
 const app = express();
 
 const corsOptions = {
-  origin: ['http://localhost:8080', 'https://suholet.github.io/news-explorer-frontend', 'https://donesaur.com'],
+  origin: ['http://localhost:8080', 'https://suholet.github.io', 'https://donesaur.com'],
   methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
   preflightContinue: false,
   allowedHeaders: ['Content-Type', 'Authorization'],
